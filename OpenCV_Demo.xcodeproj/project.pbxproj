@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		82D23AE4EB62C48A7FF57952 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 913A2A544FBD97507C8DB637 /* libPods.a */; };
+		B20E09901F502DFA003187F8 /* libtest.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B20E098F1F502DFA003187F8 /* libtest.a */; };
 		E26035551DEBC236000F69C7 /* 888.JPG in Resources */ = {isa = PBXBuildFile; fileRef = E26035541DEBC236000F69C7 /* 888.JPG */; };
 		E28E076B1DE7CBB700088369 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E28E076A1DE7CBB700088369 /* main.m */; };
 		E28E076E1DE7CBB700088369 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E28E076D1DE7CBB700088369 /* AppDelegate.m */; };
@@ -17,7 +18,6 @@
 		E28E07791DE7CBB700088369 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E28E07771DE7CBB700088369 /* LaunchScreen.storyboard */; };
 		E28E07841DE7CBB700088369 /* OpenCV_DemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E28E07831DE7CBB700088369 /* OpenCV_DemoTests.m */; };
 		E28E078F1DE7CBB700088369 /* OpenCV_DemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = E28E078E1DE7CBB700088369 /* OpenCV_DemoUITests.m */; };
-		E28E07A41DE7D2C200088369 /* OpenCVUtil.mm in Sources */ = {isa = PBXBuildFile; fileRef = E28E07A31DE7D2C200088369 /* OpenCVUtil.mm */; };
 		E28E07A61DE7DC6300088369 /* haarcascade_frontalface_alt2.xml in Resources */ = {isa = PBXBuildFile; fileRef = E28E07A51DE7DC6300088369 /* haarcascade_frontalface_alt2.xml */; };
 		E28E07A81DE7DD1E00088369 /* haarcascade_frontalface_alt.xml in Resources */ = {isa = PBXBuildFile; fileRef = E28E07A71DE7DD1E00088369 /* haarcascade_frontalface_alt.xml */; };
 		E28E07AA1DE7DE9900088369 /* IMG_0016.JPG in Resources */ = {isa = PBXBuildFile; fileRef = E28E07A91DE7DE9900088369 /* IMG_0016.JPG */; };
@@ -45,6 +45,8 @@
 		2F3B3B94E9F01497A13D3FB6 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		913A2A544FBD97507C8DB637 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		A87F3287C2C1DCF616907A4D /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		B20E098F1F502DFA003187F8 /* libtest.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libtest.a; sourceTree = "<group>"; };
+		B20E09911F502E05003187F8 /* opencvtest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = opencvtest.h; sourceTree = "<group>"; };
 		E26035541DEBC236000F69C7 /* 888.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 888.JPG; sourceTree = "<group>"; };
 		E28E07661DE7CBB700088369 /* OpenCV_Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OpenCV_Demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E28E076A1DE7CBB700088369 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -62,8 +64,6 @@
 		E28E078A1DE7CBB700088369 /* OpenCV_DemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OpenCV_DemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E28E078E1DE7CBB700088369 /* OpenCV_DemoUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OpenCV_DemoUITests.m; sourceTree = "<group>"; };
 		E28E07901DE7CBB700088369 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E28E07A21DE7D2C200088369 /* OpenCVUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenCVUtil.h; sourceTree = "<group>"; };
-		E28E07A31DE7D2C200088369 /* OpenCVUtil.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = OpenCVUtil.mm; sourceTree = "<group>"; };
 		E28E07A51DE7DC6300088369 /* haarcascade_frontalface_alt2.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = haarcascade_frontalface_alt2.xml; sourceTree = "<group>"; };
 		E28E07A71DE7DD1E00088369 /* haarcascade_frontalface_alt.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = haarcascade_frontalface_alt.xml; sourceTree = "<group>"; };
 		E28E07A91DE7DE9900088369 /* IMG_0016.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = IMG_0016.JPG; sourceTree = "<group>"; };
@@ -77,6 +77,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				82D23AE4EB62C48A7FF57952 /* libPods.a in Frameworks */,
+				B20E09901F502DFA003187F8 /* libtest.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -139,6 +140,8 @@
 		E28E07681DE7CBB700088369 /* OpenCV_Demo */ = {
 			isa = PBXGroup;
 			children = (
+				B20E098F1F502DFA003187F8 /* libtest.a */,
+				B20E09911F502E05003187F8 /* opencvtest.h */,
 				E28E076C1DE7CBB700088369 /* AppDelegate.h */,
 				E28E076D1DE7CBB700088369 /* AppDelegate.m */,
 				E28E076F1DE7CBB700088369 /* ViewController.h */,
@@ -147,8 +150,6 @@
 				E28E07AB1DE7E31600088369 /* VideoViewController.h */,
 				E28E07AC1DE7E31600088369 /* VideoViewController.mm */,
 				E28E07A91DE7DE9900088369 /* IMG_0016.JPG */,
-				E28E07A21DE7D2C200088369 /* OpenCVUtil.h */,
-				E28E07A31DE7D2C200088369 /* OpenCVUtil.mm */,
 				E28E07A51DE7DC6300088369 /* haarcascade_frontalface_alt2.xml */,
 				E28E07A71DE7DD1E00088369 /* haarcascade_frontalface_alt.xml */,
 				E28E07721DE7CBB700088369 /* Main.storyboard */,
@@ -379,7 +380,6 @@
 			files = (
 				E28E07AD1DE7E31600088369 /* VideoViewController.mm in Sources */,
 				E28E07711DE7CBB700088369 /* ViewController.m in Sources */,
-				E28E07A41DE7D2C200088369 /* OpenCVUtil.mm in Sources */,
 				E28E076E1DE7CBB700088369 /* AppDelegate.m in Sources */,
 				E28E076B1DE7CBB700088369 /* main.m in Sources */,
 			);
@@ -536,6 +536,10 @@
 				INFOPLIST_FILE = OpenCV_Demo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/OpenCV_Demo",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = lin.com;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -551,6 +555,10 @@
 				INFOPLIST_FILE = OpenCV_Demo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/OpenCV_Demo",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = lin.com;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

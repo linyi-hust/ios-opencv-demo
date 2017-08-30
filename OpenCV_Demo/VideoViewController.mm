@@ -8,10 +8,11 @@
 
 #import "VideoViewController.h"
 #import <AVFoundation/AVFoundation.h>
-#import "OpenCVUtil.h"
 #import <opencv2/opencv.hpp>
 #import <opencv2/imgproc/types_c.h>
 #import <opencv2/imgcodecs/ios.h>
+#import "opencvtest.h"
+
 
 typedef void(^PropertyChangeBlock)(AVCaptureDevice *captureDevice);
 
@@ -109,7 +110,7 @@ typedef void(^PropertyChangeBlock)(AVCaptureDevice *captureDevice);
     _captureVideoPreviewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
     [layer insertSublayer:_captureVideoPreviewLayer below:_shapeLayer];
 
-    [self addNotificationToCaptureDevice:captureDevice];
+    
  
     
 }
@@ -129,7 +130,7 @@ typedef void(^PropertyChangeBlock)(AVCaptureDevice *captureDevice);
         toChangePosition=AVCaptureDevicePositionBack;
     }
     toChangeDevice=[self getCameraDeviceWithPosition:toChangePosition];
-    [self addNotificationToCaptureDevice:toChangeDevice];
+    
     //获得要调整的设备输入对象
     AVCaptureDeviceInput *toChangeDeviceInput=[[AVCaptureDeviceInput alloc]initWithDevice:toChangeDevice error:nil];
     
@@ -182,9 +183,7 @@ typedef void(^PropertyChangeBlock)(AVCaptureDevice *captureDevice);
  *
  *  @param notification 通知对象
  */
--(void)areaChange:(NSNotification *)notification{
-    NSLog(@"捕获区域改变...");
-}
+
 
 /**
  *  会话出错
@@ -212,15 +211,7 @@ typedef void(^PropertyChangeBlock)(AVCaptureDevice *captureDevice);
 /**
  *  给输入设备添加通知
  */
--(void)addNotificationToCaptureDevice:(AVCaptureDevice *)captureDevice{
-    //注意添加区域改变捕获通知必须首先设置设备允许捕获
-    [self changeDeviceProperty:^(AVCaptureDevice *captureDevice) {
-        captureDevice.subjectAreaChangeMonitoringEnabled=YES;
-    }];
-    NSNotificationCenter *notificationCenter= [NSNotificationCenter defaultCenter];
-    //捕获区域发生改变
-    [notificationCenter addObserver:self selector:@selector(areaChange:) name:AVCaptureDeviceSubjectAreaDidChangeNotification object:captureDevice];
-}
+
 -(void)removeNotificationFromCaptureDevice:(AVCaptureDevice *)captureDevice{
     NSNotificationCenter *notificationCenter= [NSNotificationCenter defaultCenter];
     [notificationCenter removeObserver:self name:AVCaptureDeviceSubjectAreaDidChangeNotification object:captureDevice];
@@ -280,115 +271,34 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     //    });
     
     
-    NSArray *rectArray = [OpenCVUtil facePointDetectForImage:[self fixOrientation:image]];
-    
-    
-    if (rectArray.count > 0) {
-        UIBezierPath* totalPath = [UIBezierPath bezierPath];
-        for (NSNumber* rectValue in rectArray) {
-            CGRect rect = [rectValue CGRectValue];
-            rect = [self convertRectFromRect:rect toSize:_resultImageView.bounds.size];
-            UIBezierPath *subpath = [UIBezierPath bezierPathWithRect:rect];
-            [totalPath appendPath:subpath];
-        }
-        
+
+
         __weak __typeof(self) weakSelf = self;
         dispatch_async(dispatch_get_main_queue(), ^{
-            weakSelf.shapeLayer.path = totalPath.CGPath;
-            weakSelf.resultImageView.image = image;
+            int gray_value = [opencvtest convertImage:image];
+            cv::Mat cvImage;
+            UIImageToMat(image, cvImage);
+            if(!cvImage.empty())
+            {
+//                _label.text = [NSString stringWithFormat:@"%d", [_label.text intValue]+1];
+                _label.text = [NSString stringWithFormat:@"%d", gray_value];
+            
+            }
+            else{
+                _label.text = @"0";
+            }
+            cv::Mat gray;
+            cv::cvtColor(cvImage, gray,CV_RGB2GRAY);
+            UIImage* newimage = MatToUIImage(gray);
+            weakSelf.resultImageView.image = newimage;
             proccessing = 0;
         });
-    }else{
-        proccessing = 0;
-    }
     
     //    __weak __typeof(self) weakSelf = self;
     //    dispatch_async(dispatch_get_main_queue(), ^{
     //        weakSelf.resultImage.image = [OpenCVUtil faceDetectForImage:[self fixOrientation:image]];
     //        proccessing = 0;
     //    });
-}
-
-- (UIImage *)fixOrientation:(UIImage *)aImage {
-    
-    // No-op if the orientation is already correct
-    if (aImage.imageOrientation == UIImageOrientationUp)
-        return aImage;
-    
-    // We need to calculate the proper transformation to make the image upright.
-    // We do it in 2 steps: Rotate if Left/Right/Down, and then flip if Mirrored.
-    CGAffineTransform transform = CGAffineTransformIdentity;
-    
-    switch (aImage.imageOrientation) {
-        case UIImageOrientationDown:
-        case UIImageOrientationDownMirrored:
-            transform = CGAffineTransformTranslate(transform, aImage.size.width, aImage.size.height);
-            transform = CGAffineTransformRotate(transform, M_PI);
-            break;
-            
-        case UIImageOrientationLeft:
-        case UIImageOrientationLeftMirrored:
-            transform = CGAffineTransformTranslate(transform, aImage.size.width, 0);
-            transform = CGAffineTransformRotate(transform, M_PI_2);
-            break;
-            
-        case UIImageOrientationRight:
-        case UIImageOrientationRightMirrored:
-            transform = CGAffineTransformTranslate(transform, 0, aImage.size.height);
-            transform = CGAffineTransformRotate(transform, -M_PI_2);
-            break;
-        default:
-            break;
-    }
-    
-    switch (aImage.imageOrientation) {
-        case UIImageOrientationUpMirrored:
-        case UIImageOrientationDownMirrored:
-            transform = CGAffineTransformTranslate(transform, aImage.size.width, 0);
-            transform = CGAffineTransformScale(transform, -1, 1);
-            break;
-            
-        case UIImageOrientationLeftMirrored:
-        case UIImageOrientationRightMirrored:
-            transform = CGAffineTransformTranslate(transform, aImage.size.height, 0);
-            transform = CGAffineTransformScale(transform, -1, 1);
-            break;
-        default:
-            break;
-    }
-    
-    // Now we draw the underlying CGImage into a new context, applying the transform
-    // calculated above.
-    CGContextRef ctx = CGBitmapContextCreate(NULL, aImage.size.width, aImage.size.height,
-                                             CGImageGetBitsPerComponent(aImage.CGImage), 0,
-                                             CGImageGetColorSpace(aImage.CGImage),
-                                             CGImageGetBitmapInfo(aImage.CGImage));
-    CGContextConcatCTM(ctx, transform);
-    switch (aImage.imageOrientation) {
-        case UIImageOrientationLeft:
-        case UIImageOrientationLeftMirrored:
-        case UIImageOrientationRight:
-        case UIImageOrientationRightMirrored:
-            // Grr...
-            CGContextDrawImage(ctx, CGRectMake(0,0,aImage.size.height,aImage.size.width), aImage.CGImage);
-            break;
-            
-        default:
-            CGContextDrawImage(ctx, CGRectMake(0,0,aImage.size.width,aImage.size.height), aImage.CGImage);
-            break;
-    }
-    
-    // And now we just create a new UIImage from the drawing context
-    CGImageRef cgimg = CGBitmapContextCreateImage(ctx);
-    UIImage *img = [UIImage imageWithCGImage:cgimg];
-    CGContextRelease(ctx);
-    CGImageRelease(cgimg);
-    return img;
-}
-
-- (CGRect)convertRectFromRect:(CGRect)fromRect toSize:(CGSize)size{
-    
-    return CGRectMake(size.width*fromRect.origin.x, size.height*fromRect.origin.y,size.width*fromRect.size.width, size.height*fromRect.size.height);
 }
 
 
